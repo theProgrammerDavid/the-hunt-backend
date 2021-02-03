@@ -1,0 +1,30 @@
+{
+  "name": "the-hunt-backend",
+  "version": "1.0.0",
+  "description": "[![csivit][csivitu-shield]][csivitu-url] [![Issues][issues-shield]][issues-url]",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csivitu/the-hunt-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csivitu/the-hunt-backend/issues"
+  },
+  "homepage": "https://github.com/csivitu/the-hunt-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
