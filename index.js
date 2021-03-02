@@ -1,12 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 
 const leaderboardRouter = require('./routers/leaderboardRouter');
 
 const PORT = process.env.PORT || 3000
 
 const app = express();
+mongoose.connect('mongodb+srv://theHunt:f5m4s2r3c9czYYX@csivit.t1kx2.mongodb.net/theHunt?retryWrites=true&w=majority');
+mongoose.Promise = global.Promise;
 
 app.engine('hbs', exphbs({
     defaultLayout: 'main',
@@ -22,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json aka whatever you send as a json object
 app.use(bodyParser.json())
 
+app.use('/api', require('./routers/api'));
 app.use('/leaderboard', leaderboardRouter);
 
 app.get('/ping', (req, res) => {
