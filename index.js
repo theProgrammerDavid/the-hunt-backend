@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const leaderboardRouter = require('./routers/leaderboardRouter');
 
 const PORT = process.env.PORT || 3000
 
 const app = express();
-mongoose.connect('mongodb+srv://theHunt:f5m4s2r3c9czYYX@csivit.t1kx2.mongodb.net/theHunt?retryWrites=true&w=majority');
+mongoose.connect(process.env.MONGO);
 mongoose.Promise = global.Promise;
 
 app.engine('hbs', exphbs({

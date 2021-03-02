@@ -28,8 +28,8 @@ router.post('/user/register',function(req,res,next){
 });
 
 //tried hashing didn't work out
-// router.post('/user/register', (req, res) => {
-//       const hashedPassword = bcrypt.hash(req.body.pass, 10).toString();
+// router.post('/user/register', async (req, res) => {
+//       const hashedPassword = bcrypt.hash(req.body.pass, 10);
 //       User.create({
 //         name: req.body.name,
 //         email: req.body.email,
