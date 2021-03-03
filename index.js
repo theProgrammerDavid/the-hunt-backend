@@ -9,7 +9,7 @@ const leaderboardRouter = require('./routers/leaderboardRouter');
 const PORT = process.env.PORT || 3000
 
 const app = express();
-mongoose.connect(process.env.MONGO);
+mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.Promise = global.Promise;
 
 app.engine('hbs', exphbs({
@@ -18,7 +18,7 @@ app.engine('hbs', exphbs({
 }));
 // Setting template Engine
 app.set('view engine', 'hbs');
-app.use('/static', express.static(__dirname + '/public'))
+app.use('/public', express.static(__dirname + '/public'))
 
 // parse application/x-www-form-urlencoded aka your HTML <form> tag stuff
 app.use(bodyParser.urlencoded({ extended: false }))
