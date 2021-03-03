@@ -23,19 +23,11 @@ const UserSchema = new Schema({
     },
     regno: {
         type: String,
+    },
+    questions: {
+    	type: [Number],
+    	default: []
     }
-    questions: 
-    	[question: 
-    		[
-    		id: {
-    			type: Number
-    		},
-    		solved: {
-    			type: Boolean,
-    			default: false
-    		}
-    		]
-    	]
     });
 
 const User = mongoose.model('user',UserSchema);
