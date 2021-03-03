@@ -21,7 +21,8 @@ router.post("/user/login", async (req,res)=>{
     //const hashedPassword = await bcrypt.hash(req.body.pass,10);
     const pass = req.body.pass;
     User.findOne({email: email},(err,foundResults) => {
-        //console.log(req.body)
+        //console.log(req.body);
+        //console.log(foundResults);
         //console.log(foundResults.pass);
         //console.log(hashedPassword);
         //console.log(pass)
@@ -31,10 +32,10 @@ router.post("/user/login", async (req,res)=>{
         else{
             //if(foundResults.pass == hashedPassword){
             if(foundResults.pass == pass){
-                res.send("Login Successful!");
+                res.json({"login":true});
             }
             else{
-                res.send("Login Unsuccessful!");
+                res.json({"login":false});
             }
         }
     });
