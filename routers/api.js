@@ -18,7 +18,15 @@ router.get('/user/login', (req, res) => {
 //Login
 router.post("/user/login", async (req,res)=>{
     const email = req.body.email;
-    //const hashedPassword = await bcrypt.hash(req.body.pass,10);
+    let passw = req.body.pass;
+    const hashedPassword = async function hashPass(passw) {
+        let password = pass;
+        let saltRounds = 10;
+        //Note: Never define a constant salt in the source file
+        const salt = '$2b$10$GA94lFm2QPNNF80uz6UMFu';
+        const hash = await bcrypt.hash(password, salt);
+        return hash
+    }
     const pass = req.body.pass;
     User.findOne({email: email},(err,foundResults) => {
         //console.log(req.body);
@@ -30,8 +38,8 @@ router.post("/user/login", async (req,res)=>{
             console.log(err);
         }
         else{
-            //if(foundResults.pass == hashedPassword){
-            if(foundResults.pass == pass){
+            if(foundResults.pass === hashedPassword(passw)){
+            //if(foundResults.pass == pass){
                 res.json({"login":true});
             }
             else{
@@ -47,24 +55,35 @@ router.get('/user/register', (req, res) => {
 });
 
 //add new user to the db without hashing
-router.post('/user/register',function(req,res,next){
-    User.create(req.body).then((user)=>{
-        res.send(user);
-    });
-});
-
-//add new user to the db with hashing
-// router.post('/user/register', async (req, res) => {
-//     const hashedPassword = await bcrypt.hash(req.body.pass,10);
-//         User.create({
-//             name: req.body.name,
-//             email: req.body.email,
-//             uname: req.body.uname,
-//             regno: req.body.regno,
-//             pass: hashedPassword
-//         }).then((user)=>{
+// router.post('/user/register',function(req,res,next){
+//     User.create(req.body).then((user)=>{
 //         res.send(user);
 //     });
-//     });
+// });
+
+
+
+
+//add new user to the db with hashing
+router.post('/user/register', async (req, res) => {
+    let passw = req.body.pass;
+    const hashedPassword = async function hashPass(passw) {
+        let password = pass;
+        let saltRounds = 10;
+        //Note: Never define a constant salt in the source file
+        const salt = '$2b$10$GA94lFm2QPNNF80uz6UMFu';
+        const hash = await bcrypt.hash(password, salt);
+        return hash
+    }
+        User.create({
+            name: req.body.name,
+            email: req.body.email,
+            uname: req.body.uname,
+            regno: req.body.regno,
+            pass: hashedPassword(passw)
+        }).then((user)=>{
+        res.send(user);
+    });
+    });
 
 module.exports = router;
