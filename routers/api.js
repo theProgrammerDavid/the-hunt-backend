@@ -4,7 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 const hashedPassword = async function hashPass(passw) {
-    const salt = process.env.SALT;
+    const salt = await bcrypt.genSalt(12);
     const hash = await bcrypt.hash(passw, salt);
     return hash
 }
@@ -19,14 +19,19 @@ router.post("/user/login", async (req, res) => {
     try {
         const email = req.body.email;
         let passw = req.body.pass;
-        const result = await User.findOne({ email: email, pass: await hashedPassword(passw) });
-        
-        if (result) {
+        const result = await User.find({ email: email });
+        console.log(passw);
+        console.log(result[0].pass);
+        bool = bcrypt.compare(passw,result[0].pass).then((res) => {return res});
+        if (bool === true) {
             res.json({ "login": true });
         }
         else{
             res.json({ "login": false });
         }
+        console.log(bool);
+
+        
     }
     catch (e) {
         res.status(500).send();
@@ -41,7 +46,6 @@ router.get('/user/register', (req, res) => {
 //add new user to the db with hashing
 router.post('/user/register', async (req, res) => {
     let passw = req.body.pass;
-
     User.create({
         name: req.body.name,
         email: req.body.email,
@@ -49,15 +53,15 @@ router.post('/user/register', async (req, res) => {
         regno: req.body.regno,
         pass: await hashedPassword(passw)
     }).then((user) => {
-        res.send(user);
+        res.status(200).send(user);
     });
 });
 
 //get list of users
-// router.get('/user', function (req, res, next) {
-//     User.find({}).then(function (users) {
-//         res.send(users);
-//     });
-// });
+router.get('/user', function (req, res, next) {
+    User.find({}).then(function (users) {
+        res.send(users);
+    });
+});
 
 module.exports = router;
