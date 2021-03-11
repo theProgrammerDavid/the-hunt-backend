@@ -9,13 +9,6 @@ const hashedPassword = async function hashPass(passw) {
     return hash
 }
 
-//get list of users
-router.get('/user', function (req, res, next) {
-    User.find({}).then(function (users) {
-        res.send(users);
-    });
-});
-
 //show login page
 router.get('/user/login', (req, res) => {
     res.render('login.hbs');
@@ -31,48 +24,19 @@ router.post("/user/login", async (req, res) => {
         if (result) {
             res.json({ "login": true });
         }
-        // if (result.pass === await hashedPassword(passw)) {
-        //     res.json({ "login": true });
-        // }
-        res.json({ "login": false });
+        else{
+            res.json({ "login": false });
+        }
     }
     catch (e) {
-        res.send();
-        // send some error code here
+        res.status(500).send();
     }
-    // const pass = req.body.pass;
-    // User.findOne({ email: email }, async (err, foundResults) => {
-    //     console.log(foundResults.pass)
-
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    //     else {
-    //         if (foundResults.pass === await hashedPassword(passw)) {
-    //             //if(foundResults.pass == pass){
-    //             res.json({ "login": true });
-    //         }
-    //         else {
-    //             res.json({ "login": false });
-    //         }
-    //     }
-    // });
 });
 
 //show registration page
 router.get('/user/register', (req, res) => {
     res.render('register.hbs');
 });
-
-//add new user to the db without hashing
-// router.post('/user/register',function(req,res,next){
-//     User.create(req.body).then((user)=>{
-//         res.send(user);
-//     });
-// });
-
-
-
 
 //add new user to the db with hashing
 router.post('/user/register', async (req, res) => {
@@ -88,5 +52,12 @@ router.post('/user/register', async (req, res) => {
         res.send(user);
     });
 });
+
+//get list of users
+// router.get('/user', function (req, res, next) {
+//     User.find({}).then(function (users) {
+//         res.send(users);
+//     });
+// });
 
 module.exports = router;
