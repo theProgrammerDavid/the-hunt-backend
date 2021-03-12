@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 require("dotenv").config();
 
-const leaderboardRouter = require('./routers/leaderboardRouter');
+const leaderboardApi = require('./routers/leaderboardApi');
 
 const PORT = process.env.PORT || 3000
 
@@ -27,8 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.use('/api', require('./routers/api'));
-app.use('/leaderboard', leaderboardRouter);
+app.use('/api/leaderboard', leaderboardApi);
 
 app.get('/ping', (req, res) => {
     res.json({ msg: 'pong' });
