@@ -65,10 +65,8 @@ router.get('/all', async (req, res, next) => {
 
 // Get information on a specific user
 router.get('/user', async (req, res, next) => {
-	try {
-		const uname = req.query.username.toString();
-	}
-	catch (e){
+	const uname = req.query.username?.toString();
+	if (!uname){
 		res.status(500).json({
 			error: "Invalid input given",
 			code: 1
@@ -76,7 +74,6 @@ router.get('/user', async (req, res, next) => {
 		return;
 	}
 
-	const uname = req.query.username.toString();
 	const userData = await User.findOne({uname: uname});
 	if (!userData){
 		res.status(500).json({
@@ -86,7 +83,7 @@ router.get('/user', async (req, res, next) => {
 		return;
 	}
 
-	const allUsers = await User.find({});
+	const allUsers = await User.find({}).sort((a, b) => b.questions.length - a.questions.length);
 	const rank = allUsers.findIndex(usr => usr.uname == userData.uname);
 
 	res.status(200).json({
@@ -99,23 +96,17 @@ router.get('/user', async (req, res, next) => {
 
 //Check if user has completed a question and update him
 router.post('/user', async (req, res, next) => {
-	try{
-		const qno = req.query.qnumber.toString();
-		const ans = req.query.answer.toString();
-		const uname = req.query.username.toString();
-		const pass = req.query.password.toString();
-	}
-	catch (e){
+	const qno = req.query.qnumber?.toString();
+	const ans = req.query.answer?.toString();
+	const uname = req.query.username?.toString();
+	const pass = req.query.password?.toString();
+	
+	if (!(qno && ans && uname && pass )){
 		res.status(500).json({
 			error: "Invalid input given"
 		});
 		return;
 	}
-	const qno = req.query.qnumber.toString();
-	const ans = req.query.answer.toString();
-	const uname = req.query.username.toString();
-	const pass = req.query.password.toString();
-
 	console.log(qno, ans, uname, pass);
 
 	const userData =  await User.findOne({
