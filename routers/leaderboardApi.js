@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 	});
 });
 
-//-----------------------------------------------------
+//These functions are not needed by the actual game----
 
 // Route to get all question answers
 router.get('/question/', (req, res, next) => {
@@ -50,19 +50,6 @@ router.post('/question/', (req, res, next) => {
 
 
 // Get sorted list of users by ranking
-// router.get('/all', (req, res, next) => {
-// 	const allUsers = User.find({})
-// 	.then(doc => {
-// 		doc.sort((a, b)=> b.questions.length - a.questions.length);
-// 		res.status(200).json(doc);
-// 	})
-// 	.catch(err => {
-// 		console.log(err);
-// 	    res.status(500).json({
-// 	    	error: err
-// 	    });
-// 	});
-// });
 router.get('/all', async (req, res, next) => {
 
 	try {
@@ -77,115 +64,91 @@ router.get('/all', async (req, res, next) => {
 });
 
 // Get information on a specific user
-router.get('/user', (req, res, next) => {
+router.get('/user', async (req, res, next) => {
+	const uname = req.query.username?.toString();
+	if (!uname){
+		res.status(500).json({
+			error: "Invalid input given",
+			code: 1
+		});
+		return;
+	}
+
+	const userData = await User.findOne({uname: uname});
+	if (!userData){
+		res.status(500).json({
+			error: "User not found",
+			code: 2
+		});
+		return;
+	}
+
+	const allUsers = await User.find({}).sort((a, b) => b.questions.length - a.questions.length);
+	const rank = allUsers.findIndex(usr => usr.uname == userData.uname);
+
 	res.status(200).json({
-		message: "Get ranking of user; In progress"
+		message: "User data received",
+		username: userData.uname,
+		rank: rank + 1,
+		solved: userData.questions
 	});
 });
 
-// Check if user has completed a question and update him
-// router.post('/user', (req, res, next) => {
-// 	const qno = req.query.qnumber;
-// 	const ans = req.query.answer;
-// 	const uname = req.query.username;
-// 	const pass = req.query.password;
-
-// 	console.log(qno, ans, uname, pass);
-// 	const userData = User.findOne({
-// 		uname: uname,
-// 		pass: pass
-// 	})
-// 	.then(doc => {
-// 		if (doc){
-// 			console.log(doc);
-// 			const qa = Question.findOne({
-// 				number: qno,
-// 				answer: ans
-// 			})
-// 			.then(out => {
-// 				if (out){
-// 					console.log(out);
-// 					quesList = doc.questions
-// 					if (quesList.includes(qno)){
-// 						throw "User has already solved this question"
-// 					} else {
-// 						quesList.push(qno)
-// 						User.update(doc, {questions: quesList});
-// 						res.status(200).json({
-// 							answer: "correct"
-// 						});
-// 					}
-// 				} else {
-// 					throw "Either question not found or answer is wrong"
-// 				}
-// 			})
-// 			.catch(err => {
-// 				res.status(500).json({
-// 					error: err
-// 				});
-// 			})
-// 		} else {
-// 			throw "User not found"
-// 		}
-// 	})
-// 	.catch(err => {
-// 		console.log(err);
-// 		res.status(500).json({
-// 			error: err
-// 		});
-// 	});
-// });
-
-router.post('/user', (req, res, next) => {
-	const qno = req.query.qnumber;
-	const ans = req.query.answer;
-	const uname = req.query.username;
-	const pass = req.query.password;
-
+//Check if user has completed a question and update him
+router.post('/user', async (req, res, next) => {
+	const qno = req.query.qnumber?.toString();
+	const ans = req.query.answer?.toString();
+	const uname = req.query.username?.toString();
+	const pass = req.query.password?.toString();
+	
+	if (!(qno && ans && uname && pass )){
+		res.status(500).json({
+			error: "Invalid input given"
+		});
+		return;
+	}
 	console.log(qno, ans, uname, pass);
-	const userData = User.findOne({
+
+	const userData =  await User.findOne({
 		uname: uname,
 		pass: pass
-	})
-		.then(doc => {
-			if (doc) {
-				console.log(doc);
-				const qa = Question.findOne({
-					number: qno,
-					answer: ans
-				})
-					.then(out => {
-						if (out) {
-							console.log(out);
-							quesList = doc.questions
-							if (quesList.includes(qno)) {
-								throw "User has already solved this question"
-							} else {
-								quesList.push(qno)
-								User.update(doc, { questions: quesList });
-								res.status(200).json({
-									answer: "correct"
-								});
-							}
-						} else {
-							throw "Either question not found or answer is wrong"
-						}
-					})
-					.catch(err => {
-						res.status(500).json({
-							error: err
-						});
-					})
-			} else {
-				throw "User not found"
-			}
-		})
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({
-				error: err
-			});
+	});
+
+	if (!userData){
+		res.status(500).json({
+			error: "User doesn't exist/Password is wrong",
+			code: 1
 		});
+		return;
+	}
+
+	const qa = await Question.findOne({
+		number: qno,
+		answer: ans
+	});
+
+	if (!qa){
+		res.status(500).json({
+			error: "Question doesn't exist/Answer is wrong",
+			code: 2
+		});
+		return;
+	}
+
+	if (userData.questions.includes(qno)){
+		res.status(500).json({
+			error: "User has already solved this question",
+			code: 3
+		});
+		return;
+	} 
+
+	userData.questions.push(parseInt(qno));
+	userData.save()
+
+	res.status(200).json({
+		message: "User updated with question"
+	});
 });
 
 module.exports = router
