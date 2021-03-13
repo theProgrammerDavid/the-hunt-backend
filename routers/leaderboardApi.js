@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('../models/users');
 const Question = require('../models/questions');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 
 // API functionality check
@@ -59,7 +60,9 @@ router.get('/all', async (req, res, next) => {
 	}
 	catch (e) {
 		console.log(e)
-		res.status(500).json({ code: 500, msg: e })
+		res.status(500).json({
+
+		});
 	}
 });
 
@@ -96,11 +99,10 @@ router.get('/user', async (req, res, next) => {
 
 //Check if user has completed a question and update him
 router.post('/user', async (req, res, next) => {
-	const qno = req.query.qnumber?.toString();
-	const ans = req.query.answer?.toString();
-	const uname = req.query.username?.toString();
-	const pass = req.query.password?.toString();
-	
+	const qno = req.body.qnumber?.toString();
+	const ans = req.body.answer?.toString();
+	const uname = req.body.username?.toString();
+	const pass = req.body.password?.toString();
 	if (!(qno && ans && uname && pass )){
 		res.status(500).json({
 			error: "Invalid input given"
@@ -110,16 +112,27 @@ router.post('/user', async (req, res, next) => {
 	console.log(qno, ans, uname, pass);
 
 	const userData =  await User.findOne({
-		uname: uname,
-		pass: pass
+		uname: uname
 	});
 
 	if (!userData){
 		res.status(500).json({
-			error: "User doesn't exist/Password is wrong",
+			error: "User doesn't exist",
 			code: 1
 		});
 		return;
+	}
+
+	console.log(pass, userData.pass);
+	const passCheck = await bcrypt.compare(pass, userData.pass);
+	console.log(passCheck);
+
+	if (!passCheck){
+		res.status(500).json({
+			error: "Password incorrect",
+			code: 2
+		});
+		return;	
 	}
 
 	const qa = await Question.findOne({
@@ -130,7 +143,7 @@ router.post('/user', async (req, res, next) => {
 	if (!qa){
 		res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
-			code: 2
+			code: 3
 		});
 		return;
 	}
@@ -138,7 +151,7 @@ router.post('/user', async (req, res, next) => {
 	if (userData.questions.includes(qno)){
 		res.status(500).json({
 			error: "User has already solved this question",
-			code: 3
+			code: 4
 		});
 		return;
 	} 
