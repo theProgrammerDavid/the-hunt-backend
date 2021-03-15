@@ -56,13 +56,8 @@ router.get('/all', async (req, res, next) => {
 	try {
 		const allUsers = await User.find({});
 		allUsers.sort((a, b) => b.questions.length - a.questions.length);
-		for (var i = allUsers.length - 1; i >= 0; i--) {
-			allUsers[i] = {
-				questions: allUsers[i].questions,
-				uname: allUsers[i].uname
-			}
-		}
-		res.status(200).json(allUsers);
+		const responseJSON = allUsers.map(({uname, questions}) => ({uname, questions}));
+		res.status(200).json(responseJSON);
 	}
 	catch (e) {
 		console.log(e)
@@ -95,6 +90,7 @@ router.get('/user', async (req, res, next) => {
 	let allUsers = await User.find({});
 	allUsers.sort((a, b) => b.questions.length - a.questions.length);
 	const rank = allUsers.findIndex(usr => usr.uname == userData.uname);
+
 
 	res.status(200).json({
 		message: "User data received",
