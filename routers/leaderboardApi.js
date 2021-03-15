@@ -32,8 +32,8 @@ router.get('/question/', (req, res, next) => {
 // Route to create question answers
 router.post('/question/', (req, res, next) => {
 	const question = new Question({
-		number: req.query.qnumber,
-		answer: req.query.answer
+		number: req.body.qno,
+		answer: req.body.ans
 	});
 
 	question
@@ -56,19 +56,20 @@ router.get('/all', async (req, res, next) => {
 	try {
 		const allUsers = await User.find({});
 		allUsers.sort((a, b) => b.questions.length - a.questions.length);
-		res.status(200).json(allUsers);
+		const responseJSON = allUsers.map(({uname, questions}) => ({uname, questions}));
+		res.status(200).json(responseJSON);
 	}
 	catch (e) {
 		console.log(e)
 		res.status(500).json({
-
+			error: e
 		});
 	}
 });
 
 // Get information on a specific user
 router.get('/user', async (req, res, next) => {
-	const uname = req.query.username?.toString();
+	const uname = req.body.uname?.toString();
 	if (!uname){
 		res.status(500).json({
 			error: "Invalid input given",
@@ -86,12 +87,14 @@ router.get('/user', async (req, res, next) => {
 		return;
 	}
 
-	const allUsers = await User.find({}).sort((a, b) => b.questions.length - a.questions.length);
+	let allUsers = await User.find({});
+	allUsers.sort((a, b) => b.questions.length - a.questions.length);
 	const rank = allUsers.findIndex(usr => usr.uname == userData.uname);
+
 
 	res.status(200).json({
 		message: "User data received",
-		username: userData.uname,
+		uname: userData.uname,
 		rank: rank + 1,
 		solved: userData.questions
 	});
@@ -99,10 +102,10 @@ router.get('/user', async (req, res, next) => {
 
 //Check if user has completed a question and update him
 router.post('/user', async (req, res, next) => {
-	const qno = req.body.qnumber?.toString();
-	const ans = req.body.answer?.toString();
-	const uname = req.body.username?.toString();
-	const pass = req.body.password?.toString();
+	const qno = req.body.qno?.toString();
+	const ans = req.body.ans?.toString();
+	const uname = req.body.uname?.toString();
+	const pass = req.body.pass?.toString();
 	if (!(qno && ans && uname && pass )){
 		res.status(500).json({
 			error: "Invalid input given"
@@ -136,8 +139,8 @@ router.post('/user', async (req, res, next) => {
 	}
 
 	const qa = await Question.findOne({
-		number: qno,
-		answer: ans
+		qno: qno,
+		ans: ans
 	});
 
 	if (!qa){
