@@ -7,9 +7,11 @@ const bcrypt = require('bcrypt');
 
 // API functionality check
 router.get('/', (req, res, next) => {
-	res.status(200).json({
-		message: "You are accessing the leaderboard api",
-	});
+
+	res.render('leaderboard');
+	// res.status(200).json({
+	// 	message: "You are accessing the leaderboard api",
+	// });
 });
 
 //These functions are not needed by the actual game----
@@ -69,21 +71,21 @@ router.get('/all', async (req, res, next) => {
 // Get information on a specific user
 router.get('/user', async (req, res, next) => {
 	const uname = req.query.username?.toString();
-	if (!uname){
+	if (!uname) {
 		return res.status(500).json({
 			error: "Invalid input given",
 			code: 1
 		});
-		
+
 	}
 
-	const userData = await User.findOne({uname: uname});
-	if (!userData){
+	const userData = await User.findOne({ uname: uname });
+	if (!userData) {
 		return res.status(500).json({
 			error: "User not found",
 			code: 2
 		});
-		
+
 	}
 
 	const allUsers = (await User.find({})).sort((a, b) => b.questions.length - a.questions.length);
@@ -103,7 +105,7 @@ router.post('/user', async (req, res, next) => {
 	const ans = req.body.answer?.toString();
 	const uname = req.body.username?.toString();
 	const pass = req.body.password?.toString();
-	if (!(qno && ans && uname && pass )){
+	if (!(qno && ans && uname && pass)) {
 		res.status(500).json({
 			error: "Invalid input given"
 		});
@@ -111,11 +113,11 @@ router.post('/user', async (req, res, next) => {
 	}
 	console.log(qno, ans, uname, pass);
 
-	const userData =  await User.findOne({
+	const userData = await User.findOne({
 		uname: uname
 	});
 
-	if (!userData){
+	if (!userData) {
 		return res.status(500).json({
 			error: "User doesn't exist",
 			code: 1
@@ -126,11 +128,11 @@ router.post('/user', async (req, res, next) => {
 	const passCheck = await bcrypt.compare(pass, userData.pass);
 	console.log(passCheck);
 
-	if (!passCheck){
+	if (!passCheck) {
 		return res.status(500).json({
 			error: "Password incorrect",
 			code: 2
-		});	
+		});
 	}
 
 	const qa = await Question.findOne({
@@ -138,20 +140,20 @@ router.post('/user', async (req, res, next) => {
 		answer: ans
 	});
 
-	if (!qa){
+	if (!qa) {
 		return res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
 			code: 3
 		});
 	}
 
-	if (userData.questions.includes(qno)){
+	if (userData.questions.includes(qno)) {
 		return res.status(500).json({
 			error: "User has already solved this question",
 			code: 4
 		});
-		
-	} 
+
+	}
 
 	userData.questions.push(parseInt(qno));
 	userData.save()
