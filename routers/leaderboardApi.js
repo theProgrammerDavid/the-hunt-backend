@@ -160,7 +160,7 @@ router.post('/user', async (req, res, next) => {
 		return res.status(500).json({
 			error: "User has already solved this question",
 			code: 4,
-			result: false
+			result: true
 		});
 
 	}
