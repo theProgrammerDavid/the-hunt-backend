@@ -33,22 +33,25 @@ router.post("/user/login", async (req, res) => {
 
 //add new user to the db with hashing
 router.post('/user/register', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const passw = req.body.pass;
     const { email, uname, regno } = req.body;
-    try {
-        const resp = await User.create({
-            email,
-            uname,
-            regno,
-            pass: await hashedPassword(passw)
-        })
-
-        res.redirect("/?alert=success")
-    }
-    catch (e) {
-        console.log(e);
-        res.status(500).json({ msg: 'something went wrong' });
+    if(req.body.pass.length<25 && req.body.email.length<100 && req.body.uname.length<25 && req.body.regno.length==9){
+        try {
+            const resp = await User.create({
+                email,
+                uname,
+                regno,
+                pass: await hashedPassword(passw)
+            })
+            res.redirect("/?alert=success")
+        }
+        catch (e) {
+            console.log(e);
+            res.status(500).json({ msg: 'something went wrong' });
+        }
+    }else{
+        res.redirect("/?alert=Invalid Length")
     }
 });
 
