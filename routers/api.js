@@ -9,23 +9,24 @@ const hashedPassword = async(passw) => {
     return hash
 }
 
+
 //Login
-router.post("/user/login", async(req, res) => {
-    try {
-        const { email } = req.body;
-        const passw = req.body.pass;
-        const usr = await User.findOne({ email });
-        pass = usr.pass;
-        uname = usr.uname;
-        // console.log(passw);
-        // console.log(pass);
-        const login = await bcrypt.compare(passw, pass);
-        // console.log(login);
-        res.json({ login, uname });
-    } catch (e) {
-        res.status(500).send();
-    }
-});
+// router.post("/user/login", async(req, res) => {
+//     try {
+//         const { email } = req.body;
+//         const passw = req.body.pass;
+//         const usr = await User.findOne({ email });
+//         pass = usr.pass;
+//         uname = usr.uname;
+//         // console.log(passw);
+//         // console.log(pass);
+//         const login = await bcrypt.compare(passw, pass);
+//         // console.log(login);
+//         res.json({ login, uname });
+//     } catch (e) {
+//         res.status(500).send();
+//     }
+// });
 
 //show registration page
 router.get('/user/register', (_req, res) => {
