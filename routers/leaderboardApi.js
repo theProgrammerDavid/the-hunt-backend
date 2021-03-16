@@ -32,8 +32,8 @@ router.get('/question/', (req, res, next) => {
 // Route to create question answers
 router.post('/question/', (req, res, next) => {
 	const question = new Question({
-		number: req.body.qno,
-		answer: req.body.ans
+		qno: req.body.qno,
+		ans: req.body.ans
 	});
 
 	question
