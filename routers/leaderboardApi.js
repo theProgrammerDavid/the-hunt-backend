@@ -121,7 +121,8 @@ router.post('/user', async (req, res, next) => {
 	if (!userData){
 		res.status(500).json({
 			error: "User doesn't exist",
-			code: 1
+			code: 1,
+			result: false
 		});
 		return;
 	}
@@ -133,7 +134,8 @@ router.post('/user', async (req, res, next) => {
 	if (!passCheck){
 		res.status(500).json({
 			error: "Password incorrect",
-			code: 2
+			code: 2,
+			result: false
 		});
 		return;	
 	}
@@ -146,7 +148,8 @@ router.post('/user', async (req, res, next) => {
 	if (!qa){
 		res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
-			code: 3
+			code: 3,
+			result: false
 		});
 		return;
 	}
@@ -154,7 +157,8 @@ router.post('/user', async (req, res, next) => {
 	if (userData.questions.includes(qno)){
 		res.status(500).json({
 			error: "User has already solved this question",
-			code: 4
+			code: 4,
+			result: false
 		});
 		return;
 	} 
@@ -163,7 +167,9 @@ router.post('/user', async (req, res, next) => {
 	userData.save()
 
 	res.status(200).json({
-		message: "User updated with question"
+		message: "User updated with question",
+		code: 5,
+		result: true
 	});
 });
 
