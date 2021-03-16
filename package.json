@@ -23,10 +23,9 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "expess": "0.0.1-security",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.12.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

@@ -2,8 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-require("dotenv").config();
+require('dotenv').config();
 
 const leaderboardApi = require('./routers/leaderboardApi');
 
@@ -27,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json aka whatever you send as a json object
 app.use(bodyParser.json())
 
+app.use('/api', require('./routers/api'));
+// app.use('/leaderboard', leaderboardRouter);
 
 app.use('/api/leaderboard', leaderboardApi);
 

@@ -71,24 +71,26 @@ router.get('/all', async (req, res, next) => {
 router.get('/user', async (req, res, next) => {
 	const uname = req.body.uname?.toString();
 	if (!uname){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "Invalid input given",
 			code: 1
 		});
-		return;
+		
 	}
 
 	const userData = await User.findOne({uname: uname});
 	if (!userData){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "User not found",
 			code: 2
 		});
-		return;
+		
 	}
+
 
 	let allUsers = await User.find({});
 	allUsers.sort((a, b) => b.questions.length - a.questions.length);
+
 	const rank = allUsers.findIndex(usr => usr.uname == userData.uname);
 
 
@@ -119,12 +121,11 @@ router.post('/user', async (req, res, next) => {
 	});
 
 	if (!userData){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "User doesn't exist",
 			code: 1,
 			result: false
 		});
-		return;
 	}
 
 	console.log(pass, userData.pass);
@@ -132,7 +133,7 @@ router.post('/user', async (req, res, next) => {
 	console.log(passCheck);
 
 	if (!passCheck){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "Password incorrect",
 			code: 2,
 			result: false
@@ -146,21 +147,20 @@ router.post('/user', async (req, res, next) => {
 	});
 
 	if (!qa){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
 			code: 3,
 			result: false
 		});
-		return;
 	}
 
 	if (userData.questions.includes(qno)){
-		res.status(500).json({
+		return res.status(500).json({
 			error: "User has already solved this question",
 			code: 4,
 			result: false
 		});
-		return;
+		
 	} 
 
 	userData.questions.push(parseInt(qno));
