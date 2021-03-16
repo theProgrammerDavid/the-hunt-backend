@@ -23,20 +23,20 @@
                 <h1 class="heading">request to view files</h1>
                 <div class="form__group form__group--username">
                     <label for="username" class="form__label">Username:</label>
-                    <input type="text" class="form__input" id="username" name="uname" placeholder="username123" required/>
+                    <input type="text" class="form__input" id="username" name="uname" placeholder="username123" required maxlength="25" />
                 </div>
                 <div class="form__group form__group--email">
                     <label for="topic" class="form__label">Email:</label>
-                    <input type="text" class="form__input" id="email" name="email" placeholder="username123@xyz.com" required />
+                    <input type="text" class="form__input" id="email" name="email" placeholder="username123@xyz.com" required maxlength="100" />
                 </div>
                 <div class="form__group form__group--password">
                     <label for="password" class="form__label">Password:</label>
-                    <input type="password" class="form__input" id="password" name="pass" placeholder="password123" required />
+                    <input type="password" class="form__input" id="password" name="pass" placeholder="password123" required maxlength="25" />
                 </div>
                 
                 <div class="form__group form__group--cpassword">
                     <label for="c-password" class="form__label">Registration number</label>
-                    <input type="password" class="form__input" placeholder="(optional) 18BCE1233" name="regno" id="c-password"  />
+                    <input type="text" class="form__input" placeholder="(optional) 18BCE1233" name="regno" id="c-password" maxlength="9" />
                 </div>
                 
                 <div class="form__group form__group--approved">
@@ -51,17 +51,19 @@
        <br />
        <br />
     </div>
-
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcKG4IaAAAAADz8E0OXZ5uf6m__KTc92_v96FSR"></script>
     <script>
         if (document.getElementById("loader")) document.querySelector(".container").style.display = 'none';
-
         function loaded() {
             document.getElementById("loader").style.display = "none";
             document.querySelector(".container").style.display = "flex";
         }
-
         function login() {
-                document.getElementById("submitButton").click();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LcKG4IaAAAAADz8E0OXZ5uf6m__KTc92_v96FSR', {action: 'submit'}).then(function(token) {
+                    document.getElementById("submitButton").click();
+          });
+        });
             }
     </script>
 </body>
