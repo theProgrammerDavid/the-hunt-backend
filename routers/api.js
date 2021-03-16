@@ -17,11 +17,16 @@ router.get('/user/login', (_req, res) => {
 //Login
 router.post("/user/login", async(req, res) => {
     try {
-        const email = req.body.email?.toString();
+        const { email } = req.body;
         const passw = req.body.pass;
-        const { pass } = await User.findOne({ email });
+        const usr = await User.findOne({ email });
+        pass = usr.pass;
+        uname = usr.uname;
+        // console.log(passw);
+        // console.log(pass);
         const login = await bcrypt.compare(passw, pass);
-        res.json({ login });
+        // console.log(login);
+        res.json({ login, uname });
     } catch (e) {
         res.status(500).send();
     }
