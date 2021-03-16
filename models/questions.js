@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 //create Question Schema & model
 const QuestionSchema = new Schema({
-    number:Number,
-    answer:String
+    qno:Number,
+    ans:String
     });
 
 const Question = mongoose.model('question',QuestionSchema);
