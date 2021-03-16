@@ -9,11 +9,6 @@ const hashedPassword = async(passw) => {
     return hash
 }
 
-//show login page
-router.get('/user/login', (_req, res) => {
-    res.render('login.hbs');
-});
-
 //Login
 router.post("/user/login", async(req, res) => {
     try {
