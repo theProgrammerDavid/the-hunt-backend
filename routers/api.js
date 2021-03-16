@@ -14,6 +14,23 @@ router.get('/user/register', (_req, res) => {
     res.render('register.hbs');
 });
 
+router.post("/user/login", async (req, res) => {
+    try {
+        const { email } = req.body;
+        const passw = req.body.pass;
+        const usr = await User.findOne({ email });
+        pass = usr.pass;
+        uname = usr.uname;
+        // console.log(passw);
+        // console.log(pass);
+        const login = await bcrypt.compare(passw, pass);
+        // console.log(login);
+        res.json({ login, uname });
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
 //add new user to the db with hashing
 router.post('/user/register', async (req, res) => {
     //console.log(req.body);
