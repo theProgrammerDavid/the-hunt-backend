@@ -1,1 +1,60 @@
-<h2>Hello World</h2>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/public/css/homepage.styles.css" />
+    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png" />
+    <title>FALLACIES</title>
+</head>
+
+<body onload="loaded()">
+    <div id="loader"><img src="/public/img/loading.gif" alt="Loading..." class="loading-gif"></div>
+    <img src="/public/img/CSIDark(saturated).png" alt="CSI LOGO" class="csilogo" />
+    <div class="container">
+        <div class="header">
+            <img src="/public/img/title.png" alt="LOGO" class="logo" />
+            <h2 class="description">What if we told you everything you believe is a lie?</h2>
+        </div>
+        <div class="innercontainer">
+            <img src="/public/img/eye-pyramid.png" alt="Eye pyramid"
+                class="innercontainer__image innercontainer__image--pyramid">
+            <div class="buttons">
+                <a href="/api/user/register"><button
+                        class="innercontainer__button innercontainer__button--play">Register</button></a>
+                <a href="/api/leaderboard"><button
+                        class="innercontainer__button innercontainer__button--leaderboard">LEADERBOARD</button></a>
+            </div>
+            <img src="/public/img/ufo.png" alt="Eye pyramid" class="innercontainer__image innercontainer__image--ufo">
+        </div>
+        <div class="rulescontainer">
+            <h3 style="text-align: center;">The Official Rulebook for FALLACIES 2020</h3>
+            <p class="rules" style="text-align: justify;">
+            <h4>-Overall Objective</h4>
+            Players scour through the clues and try to uncover the mysteries behind these conspiracy theories.<br><br>
+            <h4>-Rules/How to play</h4>
+            > Log into your account at fallacies.csivit.com and you will be presented with a hint to start your
+            hunt!<br>
+            > Enter your answer into the text box and if you’re worthy enough, they'll let you through to the next
+            question.<br>
+            > Alternatively, you can use our Telegram Bot (brobot) to enter your response.<br>
+            > Solve as many questions as you can and be the best conspiracy theorist.<br>
+            > Please refrain from any form of malpractice to maintain the spirit of the game. CSI-VIT holds the right to
+            disqualify any participant involved.<br><br>
+            <h4>-Scoring</h4>
+            Each conspiracy that you decipher will earn you a point on the leader board.
+            </p>
+        </div>
+    </div>
+    <script>
+        if (document.getElementById("loader")) document.querySelector(".container").style.display = 'none';
+        function loaded() {
+            document.getElementById("loader").style.display = "none";
+            document.querySelector(".container").style.display = "flex";
+        }
+
+    </script>
+</body>
+
+</html>

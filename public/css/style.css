@@ -13,9 +13,7 @@
   src: url("../fonts/Cafe\ Francoise_D.otf");
 }
 
-*,
-*::after,
-*::before {
+*, *::after, *::before {
   margin: 0;
   padding: 0;
 }
@@ -25,7 +23,7 @@ html {
   /*1rem = 10px*/
 }
 
-.leaderboard{
+.leaderboard {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -33,7 +31,7 @@ html {
   align-items: center;
 }
 
-#leaderboardTable{
+#leaderboardTable {
   width: 100%;
 }
 
@@ -41,22 +39,25 @@ html {
   font-size: 4rem;
 }
 
-table{
-  border-style:  solid;
+table {
+  border-style: solid;
 }
-tr{
- outline: thin solid;
+
+tr {
+  outline: thin solid;
 }
-td{
+
+td {
   outline: thin solid;
   padding: 15px;
   font-size: 2rem;
 }
-th{
+
+th {
   padding: 15px;
   font-size: 3rem;
-
 }
+
 body {
   position: relative;
   box-sizing: border-box;
@@ -79,7 +80,6 @@ body {
   background-image: url(../img/bg.jpeg);
   background-size: cover;
   z-index: 99999;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,7 +101,6 @@ body {
   width: 126rem;
   margin-right: auto;
   margin-left: auto;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -129,7 +128,7 @@ a {
 }
 
 .logo {
-  margin-right: auto;
+  margin-right: aalert('hi')uto;
   margin-left: auto;
   width: 44%;
 }
@@ -160,12 +159,11 @@ a {
   display: none;
 }
 
-.btn-signout{
+.btn-signout {
   position: absolute;
   margin: 0 auto;
   bottom: 1rem;
   left: 2rem;
-
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -181,7 +179,6 @@ a {
   margin: 0 auto;
   bottom: 1rem;
   right: 2rem;
-
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -192,19 +189,16 @@ a {
   transition: all 0.2s;
 }
 
-.btn-signout:hover,
-.btn-leaderboard:hover {
+.btn-signout:hover, .btn-leaderboard:hover {
   transform: scale(1.1);
 }
 
-.btn-signout:active,
-.btn-leaderboard:active {
+.btn-signout:active, .btn-leaderboard:active {
   transform: scale(1);
 }
 
-.btn-signout:disabled,
-.btn-leaderboard:disabled {
-  color: rgba(0,0,0, .5);
+.btn-signout:disabled, .btn-leaderboard:disabled {
+  color: rgba(0, 0, 0, .5);
   cursor: url('../img/cursor.png'), auto;
 }
 
@@ -224,8 +218,7 @@ a {
   grid-column: 1/4;
 }
 
-.form__group--email,
-.form__group--topic {
+.form__group--email, .form__group--topic {
   grid-column: 4/-1;
   border-left: none;
 }
@@ -236,15 +229,13 @@ a {
   border-bottom: none;
 }
 
-.form__group--cpassword,
-.form__group--fileno {
+.form__group--cpassword, .form__group--fileno {
   grid-column: 1/5;
 }
 
 .form__group--approved {
   grid-column: 5/-1;
   grid-row: 3/-1;
-
   border-left: none;
   border-top: none;
   display: flex;
@@ -280,14 +271,13 @@ a {
   transform: scale(1.1);
 }
 
-.btn-submit:active,
-.btn-submit:focus {
+.btn-submit:active, .btn-submit:focus {
   transform: scale(1);
 }
 
 .btn-submit:disabled {
-  color: rgba(0,0,0, .5);
-  border-color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, .5);
+  border-color: rgba(0, 0, 0, .5);
   cursor: url('cursor.png'), auto;
 }
 
@@ -296,7 +286,6 @@ a {
   margin: 0 auto;
   bottom: 1rem;
   right: 2rem;
-
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -327,7 +316,7 @@ label {
 }
 
 input {
-  box-sizing: border-box;
+  box-sizing: border-postox;
   font-family: "trixie";
   background-color: transparent;
   padding: 5px;
@@ -340,10 +329,10 @@ input {
 }
 
 input:disabled {
-  -webkit-text-fill-color:#000;
+  -webkit-text-fill-color: #000;
   -webkit-opacity: 1;
   opacity: 1;
-  color:#000;
+  color: #000;
 }
 
 ::placeholder {
@@ -359,7 +348,6 @@ input:disabled {
   margin-bottom: 25px;
   text-align: center;
   font-size: 2rem;
-
   display: block;
 }
 
@@ -373,186 +361,152 @@ input:disabled {
 
 @media only screen and (max-width: 1200px) {
   html {
-      font-size: 55%;
+    font-size: 55%;
   }
-
   .description {
-      font-size: 3.5rem;
+    font-size: 3.5rem;
   }
 }
 
 @media only screen and (max-width: 1000px) {
   .heading {
-      font-size: 6rem;
+    font-size: 6rem;
   }
-
   .description {
-      font-size: 3rem;
+    font-size: 3rem;
   }
 }
 
 @media only screen and (max-width: 800px) {
   .heading {
-      font-size: 5rem;
-      padding-top: 5px;
+    font-size: 5rem;
+    padding-top: 5px;
   }
-
   .csilogo {
-      width: 15rem;
+    width: 15rem;
   }
-
-
   .bottom-line-signup {
-      font-size: 2.2rem;
+    font-size: 2.2rem;
   }
-
   .approved {
-      width: 80%;
+    width: 80%;
   }
-
   .description {
-      font-size: 2.5rem;
+    font-size: 2.5rem;
   }
-
   .btn-help {
-      font-size: 2.5rem;
-      bottom: 10px;
-      right: 20px;
+    font-size: 2.5rem;
+    bottom: 10px;
+    right: 20px;
   }
-  .btn-leaderboard,
-  .btn-signout {
-      font-size: 3rem;
+  .btn-leaderboard, .btn-signout {
+    font-size: 3rem;
   }
 }
 
 @media only screen and (max-width: 700px) {
   .description {
-      font-size: 2.25rem;
+    font-size: 2.25rem;
   }
-
   .csilogo {
-      width: 13rem;
+    width: 13rem;
   }
 }
 
 @media only screen and (max-width: 600px) {
   .heading {
-      font-size: 4.5rem;
+    font-size: 4.5rem;
   }
-
   .btn-help {
-      position: inherit;
-      display: block;
-      padding-left: 10px;
-      margin-bottom: 20px;
+    position: inherit;
+    display: block;
+    padding-left: 10px;
+    margin-bottom: 20px;
   }
-
   .container {
-      margin-top: 5rem;
-      width: 95vw;
+    margin-top: 5rem;
+    width: 95vw;
   }
-
   .logo {
-      width: 60%;
+    width: 60%;
   }
-
   .description {
-      font-size: 2.75rem;
-      text-align: center;
+    font-size: 2.75rem;
+    text-align: center;
   }
-
-  .btn-leaderboard,
-  .btn-signout {
-      font-size: 2.5rem;
+  .btn-leaderboard, .btn-signout {
+    font-size: 2.5rem;
   }
-
-
   .csilogo {
-      width: 15rem;
+    width: 15rem;
   }
-
   .approved {
-      width: 60%;
+    width: 60%;
   }
-
   .container {
-      width: 80vw;
+    width: 80vw;
   }
-
   html {
-      font-size: 50%;
+    font-size: 50%;
   }
-
   .form {
-      grid-template-rows: repeat(5, minmax(80px, 1fr)) 200px;
-      width: 85%;
+    grid-template-rows: repeat(5, minmax(80px, 1fr)) 200px;
+    width: 85%;
   }
-
   .form__group {
-      grid-column: 1/-1;
+    grid-column: 1/-1;
   }
-
   .form__group--username {
-      border-bottom: none;
+    border-bottom: none;
   }
-
-  .form__group--email,
+  .form__group--email, .form__group--topic {
+    border-left: 2px solid #000;
+  }
   .form__group--topic {
-      border-left: 2px solid #000;
+    grid-row: 4/5;
+    border-bottom: none;
   }
-
-  .form__group--topic {
-      grid-row: 4/5;
-      border-bottom: none;
-  }
-
   .login .form__group--password {
-      border-top: 2px solid #000;
+    border-top: 2px solid #000;
   }
-
   .form__group--approved {
-      border: 1px solid #000;
-
-      grid-row: auto;
+    border: 1px solid #000;
+    grid-row: auto;
   }
 }
 
 @media only screen and (max-width: 450px) {
   .heading {
-      padding-top: 15px;
-      font-size: 4rem;
+    padding-top: 15px;
+    font-size: 4rem;
   }
-
   .description {
-      font-size: 5vw;
-      text-align: center;
+    font-size: 5vw;
+    text-align: center;
   }
-
   .container {
-      width: 95vw;
+    width: 95vw;
   }
-
   .form {
-      width: 85%;
+    width: 85%;
   }
-
-
-
   .bottom-line {
-      font-size: 2.2rem;
+    font-size: 2.2rem;
   }
-
   .bottom-line-signup {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 }
 
 @media only screen and (max-width: 400px) {
   html {
-      font-size: 40%;
+    font-size: 40%;
   }
-
   .approved {
-      width: 70%;
+    width: 70%;
+  }
 }
+
+.hidden {
+  display: none;
 }
