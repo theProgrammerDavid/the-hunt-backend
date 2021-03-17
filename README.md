@@ -47,9 +47,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`Template`
+This repo consists of the backend for the Unreal Engine game `The Hunt`
 
 
 ### Built With
@@ -81,7 +79,11 @@ git clone https://github.com/csivitu/the-hunt-backend.git
 npm install
 ```
 
-
+3. Add a ``.env`` file
+```bash
+MONGO= <MONGO URI>
+PORT=3000
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
