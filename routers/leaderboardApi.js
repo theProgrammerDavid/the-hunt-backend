@@ -9,9 +9,6 @@ const bcrypt = require('bcrypt');
 router.get('/', (req, res, next) => {
 
 	res.render('leaderboard');
-	// res.status(200).json({
-	// 	message: "You are accessing the leaderboard api",
-	// });
 });
 
 //These functions are not needed by the actual game----
@@ -160,7 +157,7 @@ router.post('/user', async (req, res, next) => {
 		return res.status(500).json({
 			error: "User has already solved this question",
 			code: 4,
-			result: false
+			result: true
 		});
 
 	}

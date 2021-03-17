@@ -1,0 +1,23 @@
+name: Deployment
+on:
+  push:
+    branches: [ dev ]
+
+jobs: 
+  job_one: 
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploying on mc server
+      uses: actions/checkout@v2
+    - uses: appleboy/ssh-action@master
+      with: 
+        host: minecraft.csivit.com
+        username: deploy
+        key: ${{ secrets.KEY }}
+        port: 22
+        run: |
+          cd the-hunt-backend/
+          pm2 stop ignus_fatuus
+          git pull origin dev
+          pm2 start index.js --name ignus_fatuus
