@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v2
     - uses: appleboy/ssh-action@master
       with: 
-        host: minecraft.csivit.com
+        host: ${{secrets.HOST}}
         username: deploy
         key: ${{ secrets.KEY }}
         port: 22
