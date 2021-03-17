@@ -16,7 +16,7 @@ jobs:
         username: deploy
         key: ${{ secrets.KEY }}
         port: 22
-        script: |
+        run: |
           cd the-hunt-backend/
           pm2 stop ignus_fatuus
           git pull origin dev
