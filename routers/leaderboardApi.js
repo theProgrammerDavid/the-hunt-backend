@@ -9,9 +9,6 @@ const bcrypt = require('bcrypt');
 router.get('/', (req, res, next) => {
 
 	res.render('leaderboard');
-	// res.status(200).json({
-	// 	message: "You are accessing the leaderboard api",
-	// });
 });
 
 //These functions are not needed by the actual game----
