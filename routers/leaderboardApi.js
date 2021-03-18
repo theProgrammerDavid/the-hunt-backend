@@ -70,11 +70,11 @@ router.get('/all', async (req, res, next) => {
 router.get('/user', async (req, res, next) => {
 	const uname = req.body.uname?.toString();
 	if (!uname){
-		return res.status(500).json({
+		res.status(500).json({
 			error: "Invalid input given",
 			code: 1
 		});
-
+		return;
 	}
 
 	const userData = await User.findOne({ uname: uname });
