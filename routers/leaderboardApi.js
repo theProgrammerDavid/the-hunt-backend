@@ -3,6 +3,7 @@ const User = require('../models/users');
 const Question = require('../models/questions');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 
 // API functionality check

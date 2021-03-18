@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
 
 const leaderboardApi = require('./routers/leaderboardApi');
+const mainApi = require('./routers/api');
 
 const PORT = process.env.PORT || 3000
 
@@ -16,9 +18,10 @@ app.engine('hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs'
 }));
+
 // Setting template Engine
 app.set('view engine', 'hbs');
-app.use('/public', express.static(__dirname + '/public'))
+app.use('/public', express.static(path.join(__dirname,'public')))
 
 // parse application/x-www-form-urlencoded aka your HTML <form> tag stuff
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -26,9 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json aka whatever you send as a json object
 app.use(bodyParser.json())
 
-app.use('/api', require('./routers/api'));
-// app.use('/leaderboard', leaderboardRouter);
 
+app.use('/api', mainApi);
 app.use('/api/leaderboard', leaderboardApi);
 
 app.get('/ping', (req, res) => {
