@@ -18,8 +18,12 @@
             <img src="/public/img/huntLogo.png" alt="LOGO" class="logo" />
             <h2 class="description">Hunter go brrrr</h2>
         </div>
+        <h3 id="error"></h3>
+        <br>
         <div class="innercontainer">
+            
             <div class="buttons">
+                
                 <a href="/api/user/register"><button
                         class="innercontainer__button innercontainer__button--play">Register</button></a>
                 <a href="/api/leaderboard"><button
@@ -68,7 +72,18 @@
             document.getElementById("loader").style.display = "none";
             document.querySelector(".container").style.display = "flex";
         }
-
+        const key = window.location.search.substring(1,6).replace("%20"," ");
+        const tex = window.location.search.substring(7).replace("%20"," ");
+        para = document.getElementById("error");
+        para.innerHTML = tex;
+        if(key==="alert"){
+            para.style.color = "red";
+        }
+        else if(key==="mesgs"){
+            para.style.color = "green";
+        }else{
+            para.style.color = "black";
+        }
     </script>
 </body>
 

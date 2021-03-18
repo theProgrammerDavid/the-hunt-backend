@@ -44,9 +44,9 @@ router.post('/user/register', async (req, res) => {
                 email,
                 uname,
                 regno,
-                pass: await hashedPassword(passw)
+                pass: await hashedqPassword(passw)
             })
-            res.redirect("/?alert=success")
+            res.redirect("/?mesgs=Success")
         }
         catch (e) {
             console.log(e);
