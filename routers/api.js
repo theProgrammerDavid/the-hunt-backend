@@ -18,16 +18,18 @@ router.post("/user/login", async (req, res) => {
     try {
         const email = req.body.email?.toString();
         const passw = req.body.pass;
-        const usr = await User.findOne({ email });
+        const usr = await User.findOne({ email:email });
+        console.log(usr);
         pass = usr.pass;
         uname = usr.uname;
-        // console.log(passw);
-        // console.log(pass);
         const login = await bcrypt.compare(passw, pass);
-        // console.log(login);
+        console.log(`
+            My name is addi
+            and im a duuuude
+            `);
         res.json({ login, uname });
     } catch (e) {
-        res.status(500).send();
+        res.status(500).send(e);
     }
 });
 
