@@ -42,14 +42,14 @@ router.post('/user/register', async (req, res) => {
                 email,
                 uname,
                 regno,
-                pass: await hashedqPassword(passw)
+                pass: await hashedPassword(passw)
             })
             console.log("DATA:", email, uname, regno);
             res.redirect("/?mesgs=Success")
         }
         catch (e) {
             console.log(e);
-            res.status(500).json({ msg: 'something went wrong' });
+            res.status(500).json({ msg: 'something went wrong'+e });
         }
     }else{
         console.log("Invalid input length");
