@@ -42,10 +42,14 @@ router.post('/user/register', async (req, res) => {
                 email,
                 uname,
                 regno,
-                pass: await hashedPassword(passw)
+                pass: await hashedqPassword(passw)
             })
+<<<<<<< HEAD
             console.log("DATA:", email, uname, regno);
             res.redirect("/?alert=success")
+=======
+            res.redirect("/?mesgs=Success")
+>>>>>>> 77de1d2c4f09d326f87a5aef7c5631502b567e92
         }
         catch (e) {
             console.log(e);
