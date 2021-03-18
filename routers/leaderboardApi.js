@@ -14,37 +14,37 @@ router.get('/', (req, res, next) => {
 //These functions are not needed by the actual game----
 
 // Route to get all question answers
-router.get('/question/', (req, res, next) => {
-	const allQuestions = Question.find({})
-		.then(doc => {
-			console.log(doc);
-			res.status(200).json(doc);
-		})
-		.catch(err => {
-			console.log(error);
-			res.status(500).json({
-				error: err
-			});
-		});
-});
+// router.get('/question/', (req, res, next) => {
+// 	const allQuestions = Question.find({})
+// 		.then(doc => {
+// 			console.log(doc);
+// 			res.status(200).json(doc);
+// 		})
+// 		.catch(err => {
+// 			console.log(error);
+// 			res.status(500).json({
+// 				error: err
+// 			});
+// 		});
+// });
 
-// Route to create question answers
-router.post('/question/', (req, res, next) => {
-	const question = new Question({
-		number: req.body.qno,
-		answer: req.body.ans
-	});
+// // Route to create question answers
+// router.post('/question/', (req, res, next) => {
+// 	const question = new Question({
+// 		number: req.body.qno,
+// 		answer: req.body.ans
+// 	});
 
-	question
-		.save()
-		.then(result => console.log(result))
-		.catch(err => console.log(err));
+// 	question
+// 		.save()
+// 		.then(result => console.log(result))
+// 		.catch(err => console.log(err));
 
-	res.status(200).json({
-		message: "Question object created",
-		question: question
-	});
-});
+// 	res.status(200).json({
+// 		message: "Question object created",
+// 		question: question
+// 	});
+// });
 
 //-----------------------------------------------------
 
@@ -108,11 +108,20 @@ router.post('/user', async (req, res, next) => {
 	const uname = req.body.uname?.toString();
 	const pass = req.body.pass?.toString();
 	if (!(qno && ans && uname && pass )){
-		res.status(500).json({
-			error: "Invalid input given"
+		return res.status(500).json({
+			error: "Invalid input given",
+			code: 1
 		});
-		return;
 	}
+
+	if(pass.length>25 || qno.length>20 || uname.length>25 || ans.length>30){
+		return res.status(500).json({
+			error: "Input too large",
+			code: 2,
+			result: false
+		});
+	}
+
 	console.log(qno, ans, uname, pass);
 
 	const userData = await User.findOne({
@@ -122,7 +131,7 @@ router.post('/user', async (req, res, next) => {
 	if (!userData) {
 		return res.status(500).json({
 			error: "User doesn't exist",
-			code: 1,
+			code: 3,
 			result: false
 		});
 	}
@@ -134,10 +143,9 @@ router.post('/user', async (req, res, next) => {
 	if (!passCheck) {
 		return res.status(500).json({
 			error: "Password incorrect",
-			code: 2,
+			code: 4,
 			result: false
 		});
-		return;	
 	}
 
 	const qa = await Question.findOne({
@@ -148,7 +156,7 @@ router.post('/user', async (req, res, next) => {
 	if (!qa) {
 		return res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
-			code: 3,
+			code: 5,
 			result: false
 		});
 	}
@@ -156,7 +164,7 @@ router.post('/user', async (req, res, next) => {
 	if (userData.questions.includes(qno)) {
 		return res.status(500).json({
 			error: "User has already solved this question",
-			code: 4,
+			code: 6,
 			result: true
 		});
 
@@ -167,7 +175,7 @@ router.post('/user', async (req, res, next) => {
 
 	res.status(200).json({
 		message: "User updated with question",
-		code: 5,
+		code: 7,
 		result: true
 	});
 });

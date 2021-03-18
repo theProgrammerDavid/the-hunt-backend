@@ -36,7 +36,7 @@ router.post('/user/register', async (req, res) => {
     //console.log(req.body);
     const passw = req.body.pass;
     const { email, uname, regno } = req.body;
-    if(req.body.pass.length<25 && req.body.email.length<100 && req.body.uname.length<25 && req.body.regno.length==9){
+    if(req.body.pass.length<25 && req.body.email.length<100 && req.body.uname.length<25 && (req.body.regno.length==9 || req.body.regno.length==0)){
         try {
             const resp = await User.create({
                 email,
