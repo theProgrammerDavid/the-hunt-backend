@@ -3,6 +3,7 @@ const User = require('../models/users');
 const Question = require('../models/questions');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 
 // API functionality check
@@ -77,7 +78,7 @@ router.get('/user', async (req, res, next) => {
 		return;
 	}
 
-	const userData = await User.findOne({ uname: uname });
+	const userData = await User.findOne({ uname });
 	if (!userData) {
 		return res.status(500).json({
 			error: "User not found",
@@ -125,7 +126,7 @@ router.post('/user', async (req, res, next) => {
 	console.log(qno, ans, uname, pass);
 
 	const userData = await User.findOne({
-		uname: uname
+		uname
 	});
 
 	if (!userData) {
@@ -149,8 +150,8 @@ router.post('/user', async (req, res, next) => {
 	}
 
 	const qa = await Question.findOne({
-		qno: qno,
-		ans: ans
+		qno,
+		ans
 	});
 
 	if (!qa) {

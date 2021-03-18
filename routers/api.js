@@ -16,7 +16,7 @@ router.get('/user/register', (_req, res) => {
 
 router.post("/user/login", async (req, res) => {
     try {
-        const { email } = req.body;
+        const email = req.body.email?.toString();
         const passw = req.body.pass;
         const usr = await User.findOne({ email });
         pass = usr.pass;
@@ -35,7 +35,9 @@ router.post("/user/login", async (req, res) => {
 router.post('/user/register', async (req, res) => {
     //console.log(req.body);
     const passw = req.body.pass;
-    const { email, uname, regno } = req.body;
+    const email = req.body.email?.toString();
+    const uname = req.body.uname?.toString();
+    const regno = req.body.regno?.toString();
     if(req.body.pass.length<25 && req.body.email.length<100 && req.body.uname.length<25 && (req.body.regno.length==9 || req.body.regno.length==0)){
         try {
             const resp = await User.create({
