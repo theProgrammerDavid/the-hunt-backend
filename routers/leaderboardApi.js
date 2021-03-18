@@ -104,8 +104,9 @@ router.get('/user', async (req, res, next) => {
 
 //Check if user has completed a question and update him
 router.post('/user', async (req, res, next) => {
+	console.log("ROUTE: api/leaderboard/user, POST");
 	const qno = req.body.qno?.toString();
-	const ans = req.body.ans?.toString();
+	let ans = req.body.ans?.toString();
 	const uname = req.body.uname?.toString();
 	const pass = req.body.pass?.toString();
 	if (!(qno && ans && uname && pass )){
@@ -114,6 +115,8 @@ router.post('/user', async (req, res, next) => {
 			code: 1
 		});
 	}
+	ans = ans.toLowerCase()
+	console.log("DATA:", qno, ans, uname);
 
 	if(pass.length>25 || qno.length>20 || uname.length>25 || ans.length>30){
 		return res.status(500).json({
@@ -122,8 +125,8 @@ router.post('/user', async (req, res, next) => {
 			result: false
 		});
 	}
+	console.log("Input size within limits");
 
-	console.log(qno, ans, uname, pass);
 
 	const userData = await User.findOne({
 		uname: uname
@@ -136,12 +139,11 @@ router.post('/user', async (req, res, next) => {
 			result: false
 		});
 	}
-
-	console.log(pass, userData.pass);
 	const passCheck = await bcrypt.compare(pass, userData.pass);
-	console.log(passCheck);
+	console.log("PassCheck status:", passCheck);
 
 	if (!passCheck) {
+		console.log("Password Incorrect");
 		return res.status(500).json({
 			error: "Password incorrect",
 			code: 4,
@@ -155,14 +157,17 @@ router.post('/user', async (req, res, next) => {
 	});
 
 	if (!qa) {
+		console.log("Wrong Answer/Invalid Question");
 		return res.status(500).json({
 			error: "Question doesn't exist/Answer is wrong",
 			code: 5,
 			result: false
 		});
 	}
+	console.log("Question fetched:", qa.qno);
 
 	if (userData.questions.includes(qno)) {
+		console.log("Question already solved");
 		return res.status(500).json({
 			error: "User has already solved this question",
 			code: 6,
@@ -170,10 +175,11 @@ router.post('/user', async (req, res, next) => {
 		});
 
 	}
+	console.log("Question has not been completed");
 
 	userData.questions.push(parseInt(qno));
 	userData.save()
-
+	console.log("Question added to user database")
 	res.status(200).json({
 		message: "User updated with question",
 		code: 7,

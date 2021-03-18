@@ -17,16 +17,11 @@ router.get('/user/register', (_req, res) => {
 router.post("/user/login", async (req, res) => {
     try {
         const email = req.body.email?.toString();
-        const passw = req.body.pass;
-        const usr = await User.findOne({ email:email });
-        console.log(usr);
+        const passw = req.body.pass?.toString();
+        const usr = await User.findOne({ email: email });
         pass = usr.pass;
         uname = usr.uname;
         const login = await bcrypt.compare(passw, pass);
-        console.log(`
-            My name is addi
-            and im a duuuude
-            `);
         res.json({ login, uname });
     } catch (e) {
         res.status(500).send(e);
@@ -35,12 +30,13 @@ router.post("/user/login", async (req, res) => {
 
 //add new user to the db with hashing
 router.post('/user/register', async (req, res) => {
-    //console.log(req.body);
-    const passw = req.body.pass;
+    console.log("ROUTE: api/user/register, POST");
+    const passw = req.body.pass?.toString();
     const email = req.body.email?.toString();
     const uname = req.body.uname?.toString();
     const regno = req.body.regno?.toString();
     if(req.body.pass.length<25 && req.body.email.length<100 && req.body.uname.length<25 && (req.body.regno.length==9 || req.body.regno.length==0)){
+        console.log("Input length valid");
         try {
             const resp = await User.create({
                 email,
@@ -48,6 +44,7 @@ router.post('/user/register', async (req, res) => {
                 regno,
                 pass: await hashedPassword(passw)
             })
+            console.log("DATA:", email, uname, regno);
             res.redirect("/?alert=success")
         }
         catch (e) {
@@ -55,6 +52,7 @@ router.post('/user/register', async (req, res) => {
             res.status(500).json({ msg: 'something went wrong' });
         }
     }else{
+        console.log("Invalid input length");
         res.redirect("/?alert=Invalid Length")
     }
 });
