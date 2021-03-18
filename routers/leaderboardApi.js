@@ -78,7 +78,7 @@ router.get('/user', async (req, res, next) => {
 		return;
 	}
 
-	const userData = await User.findOne({ uname });
+	const userData = await User.findOne({ uname: uname });
 	if (!userData) {
 		return res.status(500).json({
 			error: "User not found",
@@ -126,7 +126,7 @@ router.post('/user', async (req, res, next) => {
 	console.log(qno, ans, uname, pass);
 
 	const userData = await User.findOne({
-		uname
+		uname: uname
 	});
 
 	if (!userData) {
@@ -150,8 +150,8 @@ router.post('/user', async (req, res, next) => {
 	}
 
 	const qa = await Question.findOne({
-		qno,
-		ans
+		qno: qno,
+		ans: ans
 	});
 
 	if (!qa) {
