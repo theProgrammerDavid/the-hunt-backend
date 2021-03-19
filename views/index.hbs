@@ -21,15 +21,17 @@
         <h3 id="error"></h3>
         <br>
         <div class="innercontainer">
-            
+
             <div class="buttons">
-                
+                <a href="https://drive.google.com/drive/folders/1xXZoiFd6NlJ-QZgBsmpowKI-89iZzTXf?usp=sharing"><button
+                        class="innercontainer__button innercontainer__button--play">Download</button></a>
                 <a href="/api/user/register"><button
                         class="innercontainer__button innercontainer__button--play">Register</button></a>
                 <a href="/api/leaderboard"><button
                         class="innercontainer__button innercontainer__button--leaderboard">LEADERBOARD</button></a>
             </div>
-            {{!-- <img src="/public/img/ufo.png" alt="Eye pyramid" class="innercontainer__image innercontainer__image--ufo"> --}}
+            {{!-- <img src="/public/img/ufo.png" alt="Eye pyramid"
+                class="innercontainer__image innercontainer__image--ufo"> --}}
         </div>
         <div class="rulescontainer">
             <h3 style="text-align: center;">The Official Rulebook for The Hunt 2021</h3>
@@ -50,9 +52,11 @@
             <br />
             <p class="rules" style="text-align: justify;">
             <h3>-Installation Instructions</h3>
-            > Visit <a href="https://drive.google.com/drive/folders/1xXZoiFd6NlJ-QZgBsmpowKI-89iZzTXf?usp=sharing">this link</a> and download the game. <br />
+            > Visit <a href="https://drive.google.com/drive/folders/1xXZoiFd6NlJ-QZgBsmpowKI-89iZzTXf?usp=sharing">this
+                link</a> and download the game. <br />
             > Extract the contents of the zip file to a folder <br />
             > Run <code>TheHunt.exe</code>
+            > Windows will ask you if you want to run this 'Suspicious' application, click on More Info -> Run Anyway
             </p>
 
             <br />
@@ -73,16 +77,16 @@
             document.getElementById("loader").style.display = "none";
             document.querySelector(".container").style.display = "flex";
         }
-        const key = window.location.search.substring(1,6).replace("%20"," ");
-        const tex = window.location.search.substring(7).replace("%20"," ");
+        const key = window.location.search.substring(1, 6).replace("%20", " ");
+        const tex = window.location.search.substring(7).replace("%20", " ");
         para = document.getElementById("error");
         para.innerHTML = tex;
-        if(key==="alert"){
+        if (key === "alert") {
             para.style.color = "red";
         }
-        else if(key==="mesgs"){
+        else if (key === "mesgs") {
             para.style.color = "green";
-        }else{
+        } else {
             para.style.color = "black";
         }
     </script>
