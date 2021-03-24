@@ -1,1 +1,53 @@
-<h2>This is the leaderboard</h2>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/style.css" type="text/css" />
+    <title>The Hunt - Leaderboard</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+    <a href="https://www.csivit.com/"><img src="/public/img/CSIDark(saturated).png" alt="CSI LOGO"
+            class="csilogo" /></a>
+            <br>
+    <div class="leaderboard">
+        <div class="header">
+            <img src="/public/img/huntLogo.png" alt="LOGO" class="logo" />
+        </div>
+
+        <table id="leaderbordTable">
+
+            <tr>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        $.ajax({
+            url: "/api/leaderboard/all",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function (res) {
+                const lt = document.getElementById('leaderbordTable');
+                const l = res.length;
+                
+                res.slice().reverse().forEach(e=>{
+                    var row = lt.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+
+                    cell1.innerHTML = e.uname;
+                    cell2.innerHTML = e.questions.length * 100;
+                })
+            }
+        });
+    </script>
+
+</body>
+
+</html>

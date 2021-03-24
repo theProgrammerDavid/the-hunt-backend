@@ -1,1 +1,98 @@
-<h2>Hello World</h2>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/public/css/homepage.styles.css" />
+    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png" />
+    <title>The Hunt</title>
+</head>
+
+<body onload="loaded()">
+
+    <div id="loader"><img src="/public/img/loading.gif" alt="Loading..." class="loading-gif"></div>
+    <img src="/public/img/CSIDark(saturated).png" alt="CSI LOGO" class="csilogo" />
+    <div class="container">
+        <div class="header">
+            <img src="/public/img/huntLogo.png" alt="LOGO" class="logo" />
+            <h2 class="description">Hunter go brrrr</h2>
+        </div>
+        <h3 id="error"></h3>
+        <br>
+        <div class="innercontainer">
+
+            <div class="buttons">
+                <a href="https://drive.google.com/drive/folders/1xXZoiFd6NlJ-QZgBsmpowKI-89iZzTXf?usp=sharing"><button
+                        class="innercontainer__button innercontainer__button--play">Download</button></a>
+                <a href="/api/user/register"><button
+                        class="innercontainer__button innercontainer__button--play">Register</button></a>
+                <a href="/api/leaderboard"><button
+                        class="innercontainer__button innercontainer__button--leaderboard">LEADERBOARD</button></a>
+            </div>
+            {{!-- <img src="/public/img/ufo.png" alt="Eye pyramid"
+                class="innercontainer__image innercontainer__image--ufo"> --}}
+        </div>
+        <div class="rulescontainer">
+            <h3 style="text-align: center;">The Official Rulebook for The Hunt 2021</h3>
+            <br />
+
+
+
+            <p class="rules" style="text-align: justify;">
+            <h3>-Overall Objective</h3>
+            Players scour through the clues and try to uncover the mysteries behind the murder.<br><br>
+            <p class="rules" style="text-align: justify;">
+            <h3>-System Requirements</h3>
+            > Windows 10 <br>
+            > DirectX 11 or higher capable GPU <br />
+            > 1GB of free HDD space <br />
+            > Active Internet connection
+
+            </p>
+            <br />
+            <p class="rules" style="text-align: justify;">
+            <h3>-Installation Instructions</h3>
+            > Visit <a href="https://drive.google.com/drive/folders/1xXZoiFd6NlJ-QZgBsmpowKI-89iZzTXf?usp=sharing">this
+                link</a> and download the game. <br />
+            > Extract the contents of the zip file to a folder <br />
+            > Run <code>TheHunt.exe</code><br>
+            > Windows will ask you if you want to run this 'Suspicious' application, click on More Info -> Run Anyway
+            </p>
+
+            <br />
+            <h3>-Rules/How to play</h3>
+            > Create an account on the website. You will need this account to log in from the game
+            <br>
+            > Further instructions will be provided in game<br>
+            > Use of profanity will result you getting yeeted from the leaderboard <br>
+            > There are some easter eggs and interactable clues scattered in the level. Each of these clues will give you an answer. You must enter this answer in the pen and paper to have your answer recorded <br>
+            > Clues once used will be locked <br>
+            <br />
+            <h3>-Scoring</h3>
+            Each clue is worth 100 points
+            </p>
+        </div>
+    </div>
+    <script>
+        if (document.getElementById("loader")) document.querySelector(".container").style.display = 'none';
+        function loaded() {
+            document.getElementById("loader").style.display = "none";
+            document.querySelector(".container").style.display = "flex";
+        }
+        const key = window.location.search.substring(1, 6).replace("%20", " ");
+        const tex = window.location.search.substring(7).replace("%20", " ");
+        para = document.getElementById("error");
+        para.innerHTML = tex;
+        if (key === "alert") {
+            para.style.color = "red";
+        }
+        else if (key === "mesgs") {
+            para.style.color = "green";
+        } else {
+            para.style.color = "black";
+        }
+    </script>
+</body>
+
+</html>
