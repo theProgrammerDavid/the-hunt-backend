@@ -143,8 +143,8 @@ body {
 }
 
 .innercontainer__button:disabled {
-    color: rgba(0,0,0, .5);
-    border-color: rgba(0,0,0,.5);
+    color: rgba(0, 0, 0, .5);
+    border-color: rgba(0, 0, 0, .5);
     cursor: url('../img/cursor.png'), auto;
 }
 
@@ -177,11 +177,11 @@ body {
 }
 
 .btn-signout:disabled {
-    color: rgba(0,0,0, .5);
+    color: rgba(0, 0, 0, .5);
     cursor: url('./cursor.png'), auto;
 }
 
-.rulescontainer{
+.rulescontainer {
     width: 50vw;
     margin: 10px 0;
     font-size: 2rem;
@@ -282,8 +282,9 @@ body {
 
 @media only screen and (max-width: 600px) {
 
-    .rulescontainer{
+    .rulescontainer {
         width: 80vw;
+    }
 
     html {
         font-size: 50%;
@@ -345,4 +346,3 @@ body {
         width: 70%;
     }
 }
-
